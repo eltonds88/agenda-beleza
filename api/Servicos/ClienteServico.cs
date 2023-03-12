@@ -7,19 +7,19 @@ namespace AgendaBeleza.Api.Servicos
 {
     public class ClienteServico
     {
-        private readonly ClienteRepositorio clienteRepositorio;
-        private readonly FornecedorRepositorio fornecedorRepositorio;
+        private readonly MySqlConnection connection;
 
         public ClienteServico(MySqlConnection connection) 
         {
-            clienteRepositorio = new ClienteRepositorio(connection);
-            fornecedorRepositorio = new FornecedorRepositorio(connection);
+            this.connection = connection;
         }
 
         public ClienteHomeResponse BuscarFornecedoresProximos(ClienteHomeRequest model, int clienteId)
         {
-            Cliente cliente = clienteRepositorio.BuscarPorId(clienteId);
+            var clienteRepositorio = new ClienteRepositorio(connection);
+            var fornecedorRepositorio = new FornecedorRepositorio(connection);
 
+            Cliente cliente = clienteRepositorio.BuscarPorId(clienteId);
             ICollection<FornecedorUsuario> fornecedores = fornecedorRepositorio.BuscarFornecedores(
                 model.TipoServicoId, model.Texto, model.RaioBuscaEmKm, 
                 cliente.Latitude, cliente.Longitude, model.Pagina, out int totalItens);
@@ -45,6 +45,25 @@ namespace AgendaBeleza.Api.Servicos
                         Distancia = f.Distancia
                     })
                     .ToList()
+            };
+            return response;
+        }
+
+        public AgendamentoClienteResponse BuscarAgendamentos(int clienteId, int pagina)
+        {
+            var agendamentoRepositorio = new AgendamentoRepositorio(connection);
+            var agendamentos = agendamentoRepositorio.BuscarAgendamentosCliente(pagina, clienteId, out var totalItens);
+
+            var response = new AgendamentoClienteResponse() { 
+                TotalItens = totalItens,
+                Itens = agendamentos.Select(a => new AgendamentoClienteItemResponse()
+                {
+                    Data = a.DataAgendamento,
+                    Fornecedor = a.Fornecedor,
+                    Id = a.Id,
+                    Status = a.StatusAgendamento,
+                    TipoServico = a.TipoServico
+                }).ToList()
             };
             return response;
         }
