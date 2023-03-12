@@ -54,5 +54,16 @@ namespace AgendaBeleza.Api.Repositorios
             }
         }
 
+        public Cliente BuscarPorId(int clienteId)
+        {
+            var parametros = CreateParameters("@id", clienteId);
+            return
+                Conn.Query<Cliente>(
+                        "select * " +
+                        " from clientes " +
+                        " where id = @id ",
+                    parametros, transaction: Transaction)
+                .FirstOrDefault();
+        }
     }
 }

@@ -91,5 +91,39 @@ namespace AgendaBeleza.Api.Repositorios
             }
         }
 
+        public ICollection<FornecedorUsuario> BuscarFornecedores(int? tipoServicoId, string? texto, 
+            int raioBuscaEmKm, decimal? latitude, decimal? longitude, 
+            int pagina, out int totalItens)
+        {
+            var parametros = CreateParameters(
+                "@raio", raioBuscaEmKm,
+                "@latitude", latitude,
+                "@longitude", longitude,
+                "@pagina", pagina
+            );
+
+            var query = "(select distinct f.*, u.nome, u.telefone, ST_Distance_Sphere(point(f.latitude, f.longitude),point(@latitude,@longitude)) / 1000.0 as distancia" +
+                " from fornecedores f " +
+                " join usuarios u on u.id = f.usuario_id " +
+                " join fornecedor_servico fs on fs.fornecedor_id = f.id " +
+                " where ST_Distance_Sphere(point(f.latitude, f.longitude),point(@latitude,@longitude))/1000.0 < @raio ";
+            if (tipoServicoId != null ) 
+            {
+                query += " and fs.tipo_servico_id = @tipoServicoId ";
+                parametros.Add("@tipoServicoId", tipoServicoId);
+            }
+            if (!string.IsNullOrEmpty(texto)) 
+            {
+                query += " and ( u.nome like @texto or f.descricao like @texto )";
+                parametros.Add("@texto", $"%{texto}%");
+            }
+            query += $" ) as result ";
+
+            totalItens = Conn.ExecuteScalar<int>($"select count(1) from {query}", parametros, transaction: Transaction);
+            return
+                Conn.Query<FornecedorUsuario>(
+                    $"select * from {query} order by distancia asc limit {(pagina < 2 ? 0 : (pagina - 1) * 20)}, 20", 
+                    parametros, transaction: Transaction).ToList();
+        }
     }
 }
