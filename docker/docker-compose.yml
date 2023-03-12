@@ -1,0 +1,50 @@
+version: "3.5"
+services:
+    mysql-senacpi:
+        container_name: "senacpi-mysql"
+        image: "mysql:8"
+        networks:
+            - clarify-network
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: xxxxx
+            TZ: America/Sao_Paulo
+    netcore-senacpi:
+        container_name: "senacpi-api"
+        build:
+            dockerfile: ./docker-conf/api.dockerfile
+            context: /docker/configs/senacpi
+        networks:
+            - clarify-network
+        volumes:
+            - /docker/configs/senacpi/docker-conf/api/vhost.d:/etc/nginx/vhost.d:ro
+            - /docker/configs/senacpi/docker-conf/my_proxy.conf:/etc/nginx/conf.d/my_proxy.conf:ro
+            - /docker/configs/senacpi/builds/api:/app
+        restart: always
+        environment:
+            HTTP_PORT: 80
+            VIRTUAL_HOST: api-agendabeleza.letz.dev
+            LETSENCRYPT_HOST: api-agendabeleza.letz.dev
+            LETSENCRYPT_EMAIL: "elton.souza@outlook.com"
+            TZ: America/Sao_Paulo
+    nginx-senacpi:
+        container_name: "senacpi-app"
+        image: "nginx:latest"
+        networks:
+            - clarify-network
+        restart: always
+        volumes:
+            - /docker/configs/senacpi/docker-conf/vhost.d:/etc/nginx/vhost.d:ro
+            - /docker/configs/senacpi/docker-conf/default.conf:/etc/nginx/conf.d/default.conf:ro
+            - /docker/configs/senacpi/docker-conf/my_proxy.conf:/etc/nginx/conf.d/my_proxy.conf:ro
+            - /docker/configs/senacpi/builds/app:/usr/share/nginx/html
+        environment:
+        environment:
+            HTTP_PORT: 80
+            VIRTUAL_HOST: agendabeleza.letz.dev
+            LETSENCRYPT_HOST: agendabeleza.letz.dev
+            LETSENCRYPT_EMAIL: "elton.souza@outlook.com"
+            TZ: America/Sao_Paulo
+networks:
+    clarify-network:
+        external: true
