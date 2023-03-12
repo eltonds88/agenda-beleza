@@ -1,4 +1,6 @@
-﻿namespace AgendaBeleza.Api.Models
+﻿using System.Globalization;
+
+namespace AgendaBeleza.Api.Models
 {
     public class UsuarioEndereco
     {
@@ -15,5 +17,16 @@
         public decimal? Latitude { get; set; }
         public decimal? Longitude { get; set; }
 
+        public string GetEndereco() 
+        {
+            if (string.IsNullOrEmpty(Complemento))
+            {
+                return string.Format("{0}, {1}. {2} - {3}/{4}", Logradouro, Numero, Bairro, Cidade, Uf);
+            } 
+            else
+            {
+                return string.Format("{0}, {1} {2}. {3} - {4}/{5}", Logradouro, Numero, Complemento, Bairro, Cidade, Uf);
+            }
+        }
     }
 }

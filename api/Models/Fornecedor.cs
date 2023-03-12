@@ -1,5 +1,14 @@
-﻿namespace AgendaBeleza.Api.Models
+﻿using Org.BouncyCastle.Asn1.Mozilla;
+
+namespace AgendaBeleza.Api.Models
 {
+    public class FornecedorUsuario : Fornecedor
+    {
+        public string? Nome { get; set; }
+        public string? Telefone { get; set; }
+        public decimal Distancia { get; set; }
+    }
+
     public class Fornecedor : UsuarioEndereco
     {
         public string? Descricao { get; set; }
