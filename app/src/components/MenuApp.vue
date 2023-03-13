@@ -14,24 +14,6 @@
             </v-col>
             <v-col cols="2" class="d-inline-flex">
                 <v-btn
-                    v-if="!isLogged"
-                    class="ma-1"
-                    color="grey"
-                    plain
-                    @click="openDialogRegister = true"
-                >
-                    Criar Conta
-                </v-btn>
-                <v-btn
-                    v-if="!isLogged"
-                    class="ma-1"
-                    color="grey"
-                    plain
-                    @click="openDialogLogIn = true"
-                >
-                    Entrar
-                </v-btn>
-                <v-btn
                     v-if="isLogged"
                     class="ma-1"
                     color="grey"
@@ -41,27 +23,18 @@
                     Sair
                 </v-btn>
             </v-col>
-        </v-row>
-
-        <dialog-entrar :openDialogLogIn="openDialogLogIn" @close="() => { openDialogLogIn = false}"></dialog-entrar>
-        <dialog-create-account :openDialogRegister="openDialogRegister" @close="() => { openDialogRegister = false}"></dialog-create-account>
+        </v-row>      
 
     </v-app-bar>
             
 </template>
 <script>
-import DialogEntrar from './DialogEntrar.vue'
-import DialogCreateAccount from './DialogCreateAccount.vue';
+
 import { getUsuarioLogado, logOff } from '../services/accountService.js'
 export default {
     name: 'MenuAppComponent',
-    components: { 
-        DialogEntrar,
-        DialogCreateAccount
-    },
+   
     data: () => ({
-        openDialogRegister: false,
-        openDialogLogIn: false,
         isLogged: false,
         isPerfilPreenchido: true,
         nome: '',

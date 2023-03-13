@@ -9,7 +9,15 @@
                             <div class="text-h5 mb-1">
                                 {{item.nomeServico}}
                             </div>
-                            <v-list-item-subtitle>{{item.classificacao}}</v-list-item-subtitle>
+                            <v-rating
+                                v-model="item.classificacao"
+                                hover
+                                bg-color="orange-lighten-1"
+                                color="orange"
+                                half-increments
+                                size="small"
+                                >
+                            </v-rating>
                             
                             <v-list-item-subtitle>{{item.descricao}}</v-list-item-subtitle>
                             <v-list-item-subtitle>{{item.telefone}}</v-list-item-subtitle>
@@ -19,14 +27,7 @@
                         
                     </v-list-item>
 
-                    <v-card-actions>
-                        <v-btn v-if="habilitaEditar" color="red lighten-2" text
-                            @click="$router.push({name: 'petEdit', params: { id: item.id }})">
-                            EDITAR
-                        </v-btn>
-                        <v-spacer></v-spacer>
-                        
-                    </v-card-actions>
+                    
                 </v-card>
             </v-col>
 
@@ -63,13 +64,13 @@ export default {
         list: [
             {
                 nomeServico: 'Barbeiro 1',
-                classificacao: 4,
+                classificacao: 4.5,
                 descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sollicitudin gravida arcu, id dignissim lectus dignissim sed. ',
                 telefone: '(21) 98902-9854'
             },
             {
                 nomeServico: 'Barbeiro 2',
-                classificacao: 2,
+                classificacao: 2.5,
                 descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sollicitudin gravida arcu, id dignissim lectus dignissim sed. ',
                 telefone: '(21) 98902-9854'
             },

@@ -27,3 +27,6 @@ html, body, .v-application {
 .w-100 {
     width: 100% 
 }
+a {
+    text-decoration: none;
+}

@@ -16,7 +16,6 @@
                                     {{item.status}}
                                 </v-chip>
                             </div>
-                            <v-list-item-subtitle>{{item.classificacao}}</v-list-item-subtitle>
                             
                             <v-list-item-subtitle>{{item.descricao}}</v-list-item-subtitle>
                             <v-list-item-subtitle>{{item.telefone}}</v-list-item-subtitle>
@@ -26,14 +25,7 @@
                         
                     </v-list-item>
 
-                    <v-card-actions>
-                        <v-btn v-if="habilitaEditar" color="red lighten-2" text
-                            @click="$router.push({name: 'petEdit', params: { id: item.id }})">
-                            EDITAR
-                        </v-btn>
-                        <v-spacer></v-spacer>
-                        
-                    </v-card-actions>
+                   
                 </v-card>
             </v-col>
 

@@ -19,3 +19,7 @@ export const logOff = () => {
 export const fazerLogin = (email, senha) => {
     return api.post('api/account/login', { email, senha })
 }
+
+export const criarContaCliente = (model) =>  {
+    return api.post('api/account/criar-cliente', model)
+}

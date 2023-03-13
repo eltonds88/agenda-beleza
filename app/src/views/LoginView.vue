@@ -35,8 +35,8 @@
 
 			<v-row class="mt-4">
 				<v-col cols="12" align="right">
-					<div class="pt-2"><a href="#">Me cadastrar como um cliente</a></div>
-					<div class="pt-2"><a href="#">Me cadastrar como um provedor de serviços</a></div>
+					<div class="pt-2"><a @click="goTo()">Me cadastrar como um cliente</a></div>
+					<div class="pt-2"><a @click="goTo()">Me cadastrar como um provedor de serviços</a></div>
 				</v-col>
 			</v-row>
 		</v-container>
@@ -59,6 +59,9 @@ export default {
 	created() {
 	},
 	methods: {
+		goTo() {
+			this.$router.push('cadastrar')
+		}
 	}
 }
 </script>

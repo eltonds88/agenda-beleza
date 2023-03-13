@@ -2,6 +2,7 @@
 	<v-container fluid>
 		<v-row class="mx-12 my-4">
 			<v-col cols="12">
+				<v-icon>mdi-undo</v-icon>
 				<router-link to="/">Voltar</router-link>
 
 			</v-col>

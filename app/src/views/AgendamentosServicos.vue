@@ -6,8 +6,8 @@
 
 			</v-col>
 
-			<lista-servicos :isLoading="isLoading" :habilitaEditar="false" :habilitaAdotar="true" :list="items">
-			</lista-servicos>
+			<lista-agendamentos :isLoading="isLoading"  :list="items">
+			</lista-agendamentos>
 
 		</v-row>
 	</v-container>
@@ -15,13 +15,13 @@
 
 <script>
 import { trataErro } from '../services/api.js'
-import ListaServicos from '../components/AgendamentosServicos.vue'
+import ListaAgendamentos from '../components/AgendamentosServicos.vue'
 import { buscarServicos } from '../services/agendaService.js'
 
 export default {
-	name: 'PetsAdoption',
+	name: 'AgendamentosServicos',
 	components: {
-		ListaServicos
+		ListaAgendamentos
 	},
 
 	data: () => ({

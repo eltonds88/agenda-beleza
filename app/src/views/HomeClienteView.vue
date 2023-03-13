@@ -2,7 +2,7 @@
     <v-container>
     <v-row class="text-center">
 		<v-col cols="12">
-			<h1 class="text-left display-2 font-weight-medium my-10 text-prymary" color="primary">Descubra profissionais perto de você</h1>
+			<h1 class="text-center font-weight-medium my-10 text-prymary" color="primary">Descubra profissionais perto de você</h1>
 			<v-text-field
 				filled
 				label="Buscar serviços"
@@ -50,7 +50,7 @@ export default {
 	},
 	methods: {
 		pesquisar() {
-			this.$router.push({name: 'petsAdoption', params: { filtro: this.termo }})
+			this.$router.push({name: 'ListaServicos', params: { filtro: this.termo }})
 		}
 	}
 }

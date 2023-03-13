@@ -1,11 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView'
+import CadastroClienteView from '../views/CadastroClienteView'
+import HomeClienteView from '../views/HomeClienteView'
+import NotFound from '../views/NotFoundView'
 
 Vue.use(VueRouter)
 
 const routes = [
+	{
+		path: '*',
+		name: 'notFound',
+		component: NotFound,
+		meta: {
+			layout: 'noheader'
+		}
+	},
 	{
 		path: '/login',
 		name: 'login',
@@ -16,9 +26,29 @@ const routes = [
 	},
 
 	{
+		path: '/cadastrar',
+		name: 'cadastrar',
+		component: CadastroClienteView,
+		meta: {
+			layout: 'noheader'
+		}
+	},
+
+	{
+		path: '/cliente',
+		name: 'cliente',
+		component: HomeClienteView
+	},
+
+	{
 		path: '/',
 		name: 'home',
-		component: HomeView
+		redirect: () => {
+			// the function receives the target route as the argument
+			// a relative location doesn't start with `/`
+			// or { path: 'profile'}
+			return 'login'
+		}
 	},
 	{
 		path: '/lista-servicos',
@@ -36,6 +66,7 @@ const routes = [
 		// which is lazy-loaded when the route is visited.
 		component: () => import(/* webpackChunkName: "petsAdoption" */ '../views/AgendamentosServicos.vue')
 	}
+	
 	
 ]
 
