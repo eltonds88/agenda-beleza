@@ -4,6 +4,10 @@ import LoginView from '../views/LoginView'
 import CadastroClienteView from '../views/CadastroClienteView'
 import HomeClienteView from '../views/HomeClienteView'
 import NotFound from '../views/NotFoundView'
+import { getUsuarioLogado } from '@/services/accountService'
+
+//const TIPO_FORNECEDOR = "FORNECEDOR";
+export const TIPO_CLIENTE = "CLIENTE";
 
 Vue.use(VueRouter)
 
@@ -13,7 +17,8 @@ const routes = [
 		name: 'notFound',
 		component: NotFound,
 		meta: {
-			layout: 'noheader'
+			layout: 'noheader',
+			requireAuth: false
 		}
 	},
 	{
@@ -21,23 +26,29 @@ const routes = [
 		name: 'login',
 		component: LoginView,
 		meta: {
-			layout: 'noheader'
+			layout: 'noheader',
+			requireAuth: false
 		}
 	},
 
 	{
-		path: '/cadastrar',
-		name: 'cadastrar',
+		path: '/cadastrar-cliente',
+		name: 'cadastrar-cliente',
 		component: CadastroClienteView,
 		meta: {
-			layout: 'noheader'
+			layout: 'noheader',
+			requireAuth: false
 		}
 	},
 
 	{
 		path: '/cliente',
 		name: 'cliente',
-		component: HomeClienteView
+		component: HomeClienteView,
+		meta: {
+			requireAuth: true,
+			role: TIPO_CLIENTE
+		}
 	},
 
 	{
@@ -53,18 +64,20 @@ const routes = [
 	{
 		path: '/lista-servicos',
 		name: 'ListaServicos',
-		// route level code-splitting
-		// this generates a separate chunk (petsAdoption.[hash].js) for this route
-		// which is lazy-loaded when the route is visited.
-		component: () => import(/* webpackChunkName: "petsAdoption" */ '../views/ListaServicos.vue')
+		component: () => import(/* webpackChunkName: "ListaServicos" */ '../views/ListaServicos.vue'),
+		meta: {
+			requireAuth: true,
+			role: TIPO_CLIENTE
+		}
 	},
 	{
 		path: '/agendamentos',
 		name: 'AgendamentosServicos',
-		// route level code-splitting
-		// this generates a separate chunk (petsAdoption.[hash].js) for this route
-		// which is lazy-loaded when the route is visited.
-		component: () => import(/* webpackChunkName: "petsAdoption" */ '../views/AgendamentosServicos.vue')
+		component: () => import(/* webpackChunkName: "AgendamentosServicos" */ '../views/AgendamentosServicos.vue'),
+		meta: {
+			requireAuth: true,
+			role: TIPO_CLIENTE
+		}
 	}
 	
 	
@@ -77,3 +90,17 @@ const router = new VueRouter({
 })
 
 export default router
+
+
+router.beforeEach((to, from, next) => {
+	var user = getUsuarioLogado();
+	//se não está logado e pagina requer autenticacao, envia para login
+    if (to.meta && to.meta.requireAuth && user == null) {
+		return next({ name: 'login' });
+	}
+	//se está logado e página requer uma role diferente do usuário, envia para o login
+	if (user != null && to.meta && to.meta.role && to.meta.role != user.role) {
+		return next({ name: 'login' });
+	}
+    next();
+});

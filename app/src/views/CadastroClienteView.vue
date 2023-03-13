@@ -27,15 +27,6 @@
                             cols="6"
                         >
                             <v-text-field
-                            v-model="model.sobrenome"
-                            label="Sobrenome"
-                            required
-                            ></v-text-field>
-                        </v-col>
-                        <v-col
-                            cols="6"
-                        >
-                            <v-text-field
                             v-model="model.cpfCnpj"
                             label="CPF/CNPJ"
                             required
@@ -47,6 +38,7 @@
                             <v-text-field
                             v-model="model.dtNascimento"
                             label="Data Nascimento"
+                            type="date"
                             required
                             ></v-text-field>
                         </v-col>
@@ -54,12 +46,14 @@
                         <v-col
                             cols="6"
                         >
-                            <v-text-field
-                            v-model="model.sexo"
-                            label="Sexo"
-                            required
-                            ></v-text-field>
+                            <v-select
+                                v-model="model.sexo"
+                                label="Sexo"
+                                :items="['Masculino', 'Feminino', 'Não informar']"
+                            ></v-select>
+
                         </v-col>
+
                         <v-col
                             cols="6"
                         >
@@ -109,6 +103,17 @@
                                         label="Complemento"
                                         ></v-text-field>
                                     </v-col>
+                                    <v-col cols="5">
+                                        <v-text-field
+                                        v-model="model.bairro"
+                                        :rules="[
+                                            () => !!model.bairro || 'Campo obrigatório',
+                                        ]"
+                                        :error-messages="errorMessages"
+                                        label="Bairro*"
+                                        required
+                                        ></v-text-field>
+                                    </v-col>
                                     <v-col
                                         cols="6"
                                     >
@@ -131,27 +136,19 @@
                                         required
                                         ></v-text-field>
                                     </v-col>
-                                    <v-col cols="5">
-                                        <v-text-field
-                                        v-model="model.bairro"
-                                        :rules="[
-                                            () => !!model.bairro || 'Campo obrigatório',
-                                        ]"
-                                        :error-messages="errorMessages"
-                                        label="Bairro*"
-                                        required
-                                        ></v-text-field>
-                                    </v-col>
                                     <v-col cols="2">
-                                        <v-text-field
-                                        v-model="model.uf"
-                                        :rules="[
-                                            () => !!model.uf || 'Campo obrigatório'
-                                        ]"
-                                        :error-messages="errorMessages"
-                                        label="UF*"
-                                        required
-                                        ></v-text-field>
+                                        <v-combobox
+                                            v-model="model.uf"
+                                            :rules="[
+                                                () => !!model.uf || 'Campo obrigatório'
+                                            ]"
+                                            :error-messages="errorMessages"
+                                            label="UF*"
+                                            required
+                                            :items="estados"
+                                            :return-object="false"
+                                            dense
+                                        ></v-combobox>
                                     </v-col>
 
                                 </v-row>
@@ -226,12 +223,14 @@
   
   <script>
   import { trataErro } from '../services/api.js'
-  import { criarContaCliente, registrarTokenUsuario } from '../services/accountService.js'
+  import { criarContaCliente, logOff, registrarTokenUsuario } from '../services/accountService.js'
+  import { estadosOptions } from '../services/listasService.js'
   export default {
     
       name: 'CadastroView',
       components: {},
       data: () => ({
+        estados: estadosOptions,
         step: 1,
         errorMessages: [],
         tipo: '',
@@ -248,9 +247,9 @@
             email: '',
             senha: '',
             telefone: '',
-            cpfCnpj: '',
-            sexo: '',
-            dtNascimento: ''
+            cpfCnpj: null,
+            sexo: null,
+            dtNascimento: null
         }
       }),
       computed: {
@@ -259,6 +258,7 @@
         }
       },
       created() {
+        logOff();
       },
       methods: {
         checkPassword() {
@@ -269,16 +269,15 @@
         },
         cadastrar() {
             this.$refs.form.validate()
+            
             if(this.valid) {
-                
+                let isCadastrar = this.textBtnCTACadastro === 'Cadastrar';
                 this.step === 3 ? null : this.step += 1
-                console.log('btn cta', this.textBtnCTACadastro)
-                if (this.textBtnCTACadastro === 'Cadastrar') {
+                if (isCadastrar) {
                     criarContaCliente(this.model).then(({data}) => {
                         registrarTokenUsuario(data)
                         this.$toasted.success('Usuário criado com sucesso')
                         this.$root.$emit('loggedOn', data);
-                        this.$emit('close');
                         this.model.logradouro = '',
                         this.model.numero = '',
                         this.model.complemento = '',
@@ -293,13 +292,16 @@
                         this.model.cpfCnpj = '',
                         this.model.sexo = '',
                         this.model.dtNascimento = ''
+                        this.$router.push({name: 'cliente'})
+
                     }).catch(error => {
                         trataErro(this, error)
                     })
                     return
+                } else {
+                    this.$refs.form.resetValidation()
                 }
-                
-                
+
             }
         }
       }

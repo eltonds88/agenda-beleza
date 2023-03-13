@@ -50,9 +50,6 @@ export default {
         this.$root.$on('loggedOn', (user) => {
             this.setUserLogged(user)
         })
-        this.$root.$on('perfilCompleto', () => {
-            this.isPerfilPreenchido = true;
-        })
     },
     methods: {
         setUserLogged(data) {
@@ -75,7 +72,6 @@ export default {
     },
     destroyed() {
         this.$root.$off('loggedOn');
-        this.$root.$off('perfilCompleto');
     } 
 }
 </script>

@@ -9,13 +9,11 @@
 </template>
 
 <script>
-import MenuApp from '@/components/MenuApp'
 const default_layout = "default";
 
 export default {
   name: 'AppMain',
   components: {
-    MenuApp
   },
 
   data: () => ({
