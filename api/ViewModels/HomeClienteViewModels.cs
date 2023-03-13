@@ -2,7 +2,7 @@
 {
     public class ClienteHomeRequest
     {
-        public int? TipoServicoId { get; set; }
+        public IEnumerable<int>? TiposServicosIds { get; set; }
         public string? Texto { get; set; }
         public int RaioBuscaEmKm { get; set; } = 20;
         public int Pagina { get; set; } = 1;

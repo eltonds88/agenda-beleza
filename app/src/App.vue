@@ -1,14 +1,16 @@
 <template>
-  <v-app>
-    <MenuApp />
-    <v-main>
-      <router-view></router-view>
-    </v-main>
+  <v-app class="bg-default">
+    <component :is="layout">
+      <transition name="fade" mode="out-in">
+        <router-view></router-view>
+      </transition>
+    </component>
   </v-app>
 </template>
 
 <script>
 import MenuApp from '@/components/MenuApp'
+const default_layout = "default";
 
 export default {
   name: 'AppMain',
@@ -19,6 +21,14 @@ export default {
   data: () => ({
     //
   }),
+  computed: {
+    layout() {
+      return (this.$route.meta.layout || default_layout) + '-layout';
+    }
+  },
+  mounted() {
+    console.log('OK')
+  }
 };
 </script>
 

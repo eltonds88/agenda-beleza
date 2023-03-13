@@ -91,7 +91,7 @@ namespace AgendaBeleza.Api.Repositorios
             }
         }
 
-        public ICollection<FornecedorUsuario> BuscarFornecedores(int? tipoServicoId, string? texto, 
+        public ICollection<FornecedorUsuario> BuscarFornecedores(IEnumerable<int>? tiposServicos, string? texto, 
             int raioBuscaEmKm, decimal? latitude, decimal? longitude, 
             int pagina, out int totalItens)
         {
@@ -107,10 +107,9 @@ namespace AgendaBeleza.Api.Repositorios
                 " join usuarios u on u.id = f.usuario_id " +
                 " join fornecedor_servico fs on fs.fornecedor_id = f.id " +
                 " where ST_Distance_Sphere(point(f.latitude, f.longitude),point(@latitude,@longitude))/1000.0 < @raio ";
-            if (tipoServicoId != null ) 
+            if (tiposServicos != null && tiposServicos.Count() > 0) 
             {
-                query += " and fs.tipo_servico_id = @tipoServicoId ";
-                parametros.Add("@tipoServicoId", tipoServicoId);
+                query += $" and fs.tipo_servico_id in ( {string.Join(",", tiposServicos)} )";
             }
             if (!string.IsNullOrEmpty(texto)) 
             {

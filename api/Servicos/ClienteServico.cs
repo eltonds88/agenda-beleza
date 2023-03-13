@@ -21,7 +21,7 @@ namespace AgendaBeleza.Api.Servicos
 
             Cliente cliente = clienteRepositorio.BuscarPorId(clienteId);
             ICollection<FornecedorUsuario> fornecedores = fornecedorRepositorio.BuscarFornecedores(
-                model.TipoServicoId, model.Texto, model.RaioBuscaEmKm, 
+                model.TiposServicosIds, model.Texto, model.RaioBuscaEmKm, 
                 cliente.Latitude, cliente.Longitude, model.Pagina, out int totalItens);
 
             var response = new ClienteHomeResponse()

@@ -1,0 +1,29 @@
+html, body, .v-application {
+    font-family: 'Poppins' !important;
+}
+
+.bg-default {
+    background-color: #DEDEDE !important;
+}
+
+.bg-white {
+    background-color: #fff;
+}
+.logo {
+    font-family: 'Playfair Display SC';
+    text-transform: uppercase;
+}
+.card-center {
+    max-width: 600px;
+    margin: auto;
+    margin-top: 75px;
+}
+.btn-azul {
+    background-color: #40CEFB !important;
+    border-radius: 4px;
+    color: #fff !important;
+    text-transform: none;
+}
+.w-100 {
+    width: 100% 
+}

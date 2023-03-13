@@ -19,13 +19,3 @@ export const logOff = () => {
 export const fazerLogin = (email, senha) => {
     return api.post('api/account/login', { email, senha })
 }
-
-
-export const marcarPerfilCompleto = () => {
-    let userJson = localStorage.getItem('user');
-    if (userJson != null) {
-        var user = JSON.parse(userJson);
-        user.cadastroCompleto = true;
-        localStorage.setItem("user", JSON.stringify(user))
-    }
-}
