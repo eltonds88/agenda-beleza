@@ -22,5 +22,47 @@ namespace AgendaBeleza.Api.Repositorios
                     parametros, transaction: Transaction).ToList();
         }
 
+        public Agendamento BuscarPorId(int agendamentoId)
+        {
+            var parametros = CreateParameters("@id", agendamentoId);
+            return
+                Conn.Query<Agendamento>(
+                        "select * " +
+                        " from agendamentos " +
+                        " where id = @id ",
+                    parametros, transaction: Transaction)
+                .FirstOrDefault();
+        }
+
+        public void AlterarStatus(int agendamentoId, int usuarioId, string status)
+        {
+            try
+            {
+                BeginTransaction();
+                var query = "update agendamentos set status_agendamento = @status where id = @id ";
+                var parametros = CreateParameters("@status", status, "@id", agendamentoId);
+                Conn.Execute(query, parametros, transaction: Transaction);
+
+                query = "insert into agendamento_historico(agendamento_id, usuario_id, status_agendamento, dt_historico) values (@agendamentoId, @usuarioId, @statusAgendamento, @dtHistorico)";
+                ExecuteInsert(
+                    query,
+                    new Tuple<string, object?>[] {
+                        new("@agendamentoId", agendamentoId),
+                        new("@usuarioId", usuarioId),
+                        new("@statusAgendamento", status),
+                        new("@dtHistorico", DateTime.Now)
+                    }
+                );
+
+                Commit();
+            }
+            catch (Exception)
+            {
+                Rollback();
+                throw;
+            }
+        }
+
+
     }
 }
