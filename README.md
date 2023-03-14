@@ -1,9 +1,6 @@
 # Agenda Beleza [PI SENAC]
 O repositório git do projeto está em https://github.com/eltonds88/agenda-beleza
 
-No youtube foram gravados X curtos vídeos explicativos que podem ser acessados na playlist abaixo:
-link
-
 ### Autores
 Grupo 09
 - Antônio Simões da Costa Neto
@@ -14,19 +11,23 @@ Grupo 09
 
 ## Sobre o projeto
 
-O sistema Agenda Beleza tem como proposta ...
+O sistema Agenda Beleza tem como proposta ser um elo entre fornecedores de serviço de beleza e clientes que procuram tais serviços.
 
 <hr />
 
 ## Ambiente de demonstração
 O sistema está disponível para ser acessado e testado na url https://agendabeleza.letz.dev
+A documentação OpenAPI da api pode ser acessada em https://api-agendabeleza.letz.dev/swagger/index.html
 
 
 #### Cadastros de Fornecedores com dados
-- Email: forncedor1@teste.com / Senha: 123456
+- Email: barbeiro6@gmail.com / Senha: 123456
+- Email: er7579345@gmail.com / Senha: 123456
+- Email: eltonds888989@gmail.com / Senha: 123456
 
 #### Cadastros de Clientes com dados
-- Email: cliente1@teste.com / Senha: 123456
+- Email: eltonds88@gmail.com / Senha: 123456
+- Email: cliente1@gmail.com / Senha: 123456
 
 <hr />
 
@@ -69,6 +70,8 @@ $ git clone https://github.com/eltonds88/agenda-beleza.git
 Deve ser criado um banco de dados mysql (versão 8). O nome do banco, usuário e senha são a seu critério.
 Após criado o banco de dados, executar os scripts abaixo (na ordem apresentada):
 - sql/01.tabelas.sql
+- sql/02.dados_iniciais.sql
+- sql/03.cidades.sql
 
 ### API (backend)
 Para executar a API você deve primeirament instalar a SDK do netcore 6.
