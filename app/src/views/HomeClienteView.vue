@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { getUsuarioLogado } from '../services/accountService.js'
+// import { getUsuarioLogado } from '../services/accountService.js'
 export default {
 	name: 'HomeView',
 	components: {},
@@ -43,10 +43,10 @@ export default {
 		value: ['Barbeiro', 'Salão', 'Manicure']
 	}),
 	created() {
-		var user = getUsuarioLogado();
-		if (user != null && user.role == 'INSTITUICAO') {
-			this.$router.push({path: '/pets-instituicao'})
-		}
+		// var user = getUsuarioLogado();
+		// if (user != null && user.role == 'INSTITUICAO') {
+		// 	this.$router.push({path: '/pets-instituicao'})
+		// }
 	},
 	methods: {
 		pesquisar() {

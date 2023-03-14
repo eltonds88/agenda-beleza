@@ -81,6 +81,15 @@ const routes = [
 		}
 	},
 	{
+		path: '/detalhes-servicos',
+		name: 'DetalhesServicos',
+		component: () => import(/* webpackChunkName: "ListaServicos" */ '../views/DetalhesServicos.vue'),
+		meta: {
+			requireAuth: true,
+			role: TIPO_CLIENTE
+		}
+	},
+	{
 		path: '/agendamentos',
 		name: 'AgendamentosServicos',
 		component: () => import(/* webpackChunkName: "AgendamentosServicos" */ '../views/AgendamentosServicos.vue'),

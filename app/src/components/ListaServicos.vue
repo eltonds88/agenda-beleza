@@ -3,11 +3,11 @@
 
         <v-row class="" dense>
             <v-col lg="12"  v-for="item in list" :key="item.id">
-                <v-card class="mx-auto mb-8" outlined>
-                    <v-list-item three-line>
-                        <v-list-item-content>
+                <v-card class="mx-auto mb-8 px-2 py-2" outlined>
+                    <div class="d-flex flex-row justify-space-between">
+                        <div style="width: 30%;">
                             <div class="text-h5 mb-1">
-                                {{item.nomeServico}}
+                                {{item.nome}}
                             </div>
                             <v-rating
                                 v-model="item.classificacao"
@@ -18,16 +18,20 @@
                                 size="small"
                                 >
                             </v-rating>
-                            
-                            <v-list-item-subtitle>{{item.descricao}}</v-list-item-subtitle>
-                            <v-list-item-subtitle>{{item.telefone}}</v-list-item-subtitle>
-                            
-                        </v-list-item-content>
-
-                        
-                    </v-list-item>
-
-                    
+                            <div>
+                                {{item.endereco}}
+                            </div>
+                            <div>
+                                {{item.telefone}}
+                            </div>
+                        </div>
+                        <div class="d-flex align-center" style="width: 50%;">
+                            {{item.descricao}}
+                        </div>
+                        <div class="d-flex align-center">
+                            <v-btn class="w-100 grey-darken-3 d-inline-block" @click="detalhes(item)">Detalhes</v-btn>
+                        </div>
+                    </div>
                 </v-card>
             </v-col>
 
@@ -39,11 +43,6 @@
                 <h5>Nenhum pet para listar</h5>
             </v-col>
         </v-row>
-
-
-
-        
-
     </v-container>
 </template>
   
@@ -52,45 +51,23 @@ export default {
     name: 'ListaAnimaisComponent',
     components: {},
     props: {
-        // list: {
-        //     type: Array
-        // },
+        list: {
+            type: Array
+        },
         isLoading: {
             type: Boolean,
             default: true
         }
     },
     data: () => ({
-        list: [
-            {
-                nomeServico: 'Barbeiro 1',
-                classificacao: 4.5,
-                descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sollicitudin gravida arcu, id dignissim lectus dignissim sed. ',
-                telefone: '(21) 98902-9854'
-            },
-            {
-                nomeServico: 'Barbeiro 2',
-                classificacao: 2.5,
-                descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sollicitudin gravida arcu, id dignissim lectus dignissim sed. ',
-                telefone: '(21) 98902-9854'
-            },
-            {
-                nomeServico: 'Barbeiro 3',
-                classificacao: 3,
-                descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sollicitudin gravida arcu, id dignissim lectus dignissim sed. ',
-                telefone: '(21) 98902-9854'
-            },
-            {
-                nomeServico: 'Barbeiro 4',
-                classificacao: 5,
-                descricao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sollicitudin gravida arcu, id dignissim lectus dignissim sed. ',
-                telefone: '(21) 98902-9854'
-            }
-        ]
+        item: null
         
     }),
     methods: {
-        
+        detalhes (item) {
+            this.item = item
+            this.$router.push({name: 'DetalhesServicos', params: { filtro: item }})
+        }
     }
 }
 </script>

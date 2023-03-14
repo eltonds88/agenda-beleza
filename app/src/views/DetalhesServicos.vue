@@ -5,12 +5,11 @@
 				
 				<v-icon>mdi-undo</v-icon>
 				<router-link to="/cliente">Voltar</router-link>
-				<h1 class="text-center font-weight-medium my-10 text-prymary" color="primary">Descubra profissionais perto de você</h1>
 
 			</v-col>
 
-			<lista-servicos :isLoading="isLoading" :habilitaEditar="false" :habilitaAdotar="true" :list="items">
-			</lista-servicos>
+			<detalhes-servicos :isLoading="isLoading" :habilitaEditar="false" :habilitaAdotar="true" :list="this.$route.params.filtro">
+			</detalhes-servicos>
 
 		</v-row>
 	</v-container>
@@ -18,13 +17,13 @@
 
 <script>
 import { trataErro } from '../services/api.js'
-import ListaServicos from '../components/ListaServicos.vue'
+import DetalhesServicos from '../components/DetalhesServicos.vue'
 import { buscarServicos } from '../services/agendaService.js'
 
 export default {
 	name: 'PetsAdoption',
 	components: {
-		ListaServicos
+		DetalhesServicos
 	},
 
 	data: () => ({
