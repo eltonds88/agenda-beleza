@@ -11,6 +11,10 @@ import NoHeaderLayout from './views/layout/NoHeaderLayout.vue'
 Vue.component('default-layout', DefaultLayout);
 Vue.component('noheader-layout', NoHeaderLayout);
 
+
+import { VueMaskDirective } from 'v-mask'
+Vue.directive('mask', VueMaskDirective);
+
 Vue.config.productionTip = false
 Vue.use(Toasted, {
   position: 'top-center',

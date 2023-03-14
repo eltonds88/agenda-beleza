@@ -23,3 +23,7 @@ export const fazerLogin = (email, senha) => {
 export const criarContaCliente = (model) =>  {
     return api.post('api/account/criar-cliente', model)
 }
+
+export const criarContaFornecedor = (model) =>  {
+    return api.post('api/account/criar-fornecedor', model)
+}

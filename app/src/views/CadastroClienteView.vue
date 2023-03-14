@@ -6,8 +6,8 @@
             <v-form ref="form" v-model="valid">
                 <v-row>
                   <v-col cols="12">
-                      <label class="logo mr-3">AgendaBeleza</label> login
-                      <h2 class="mt-6">Configure seu perfil</h2>
+                      <label class="logo mr-3">AgendaBeleza</label> cadastrar
+                      <h2 class="mt-6">Configure seu perfil de cliente</h2>
                   </v-col>
                 </v-row>
                 <div v-if="step === 1">                
@@ -21,6 +21,7 @@
                             :error-messages="errorMessages"
                             label="Nome*"
                             required
+                            outlined
                             ></v-text-field>
                         </v-col>
                         <v-col
@@ -30,6 +31,7 @@
                             v-model="model.cpfCnpj"
                             label="CPF/CNPJ"
                             required
+                            outlined
                             ></v-text-field>
                         </v-col>
                         <v-col
@@ -40,6 +42,7 @@
                             label="Data Nascimento"
                             type="date"
                             required
+                            outlined
                             ></v-text-field>
                         </v-col>
                         
@@ -50,6 +53,7 @@
                                 v-model="model.sexo"
                                 label="Sexo"
                                 :items="['Masculino', 'Feminino', 'Não informar']"
+                                outlined
                             ></v-select>
 
                         </v-col>
@@ -61,6 +65,7 @@
                             v-model="model.telefone"
                             label="Telefone"
                             required
+                            outlined
                             ></v-text-field>
                         </v-col>
                         
@@ -82,6 +87,7 @@
                                         :error-messages="errorMessages"
                                         label="Endereço completo*"
                                         required
+                                        outlined
                                         ></v-text-field>
                                     </v-col>
                                     <v-col cols="4">
@@ -93,6 +99,7 @@
                                         :error-messages="errorMessages"
                                         label="Número*"
                                         required
+                                        outlined
                                         ></v-text-field>
                                     </v-col>
                                     <v-col
@@ -101,6 +108,7 @@
                                         <v-text-field
                                         v-model="model.complemento"
                                         label="Complemento"
+                                        outlined
                                         ></v-text-field>
                                     </v-col>
                                     <v-col cols="5">
@@ -112,6 +120,7 @@
                                         :error-messages="errorMessages"
                                         label="Bairro*"
                                         required
+                                        outlined
                                         ></v-text-field>
                                     </v-col>
                                     <v-col
@@ -123,6 +132,7 @@
                                             () => !!model.cep || 'Campo obrigatório',
                                         ]"
                                         label="CEP"
+                                        outlined
                                         ></v-text-field>
                                     </v-col>
                                     <v-col cols="5">
@@ -134,6 +144,7 @@
                                         :error-messages="errorMessages"
                                         label="Cidade*"
                                         required
+                                        outlined
                                         ></v-text-field>
                                     </v-col>
                                     <v-col cols="2">
@@ -147,7 +158,7 @@
                                             required
                                             :items="estados"
                                             :return-object="false"
-                                            dense
+                                            outlined
                                         ></v-combobox>
                                     </v-col>
 
@@ -172,6 +183,7 @@
                                         :error-messages="errorMessages"
                                         label="Email*"
                                         required
+                                        outlined
                                         ></v-text-field>
                                     </v-col>                                    
                                     
@@ -182,6 +194,7 @@
                                         label="Senha*"
                                         type="password"
                                         required
+                                        outlined
                                         ></v-text-field>
                                     </v-col>
                                     <v-col cols="12">
@@ -194,6 +207,7 @@
                                         label="Confirmação de Senha*"
                                         type="password"
                                         required
+                                        outlined
                                         ></v-text-field>
                                     </v-col>
 
@@ -249,7 +263,8 @@
             telefone: '',
             cpfCnpj: null,
             sexo: null,
-            dtNascimento: null
+            dtNascimento: null,
+            confirmarSenha: ''
         }
       }),
       computed: {

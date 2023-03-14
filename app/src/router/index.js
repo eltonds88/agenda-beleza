@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import LoginView from '../views/LoginView'
 import CadastroClienteView from '../views/CadastroClienteView'
+import CadastroFornecedorView from '../views/CadastroFornecedorView'
 import HomeClienteView from '../views/HomeClienteView'
 import NotFound from '../views/NotFoundView'
 import { getUsuarioLogado } from '@/services/accountService'
@@ -35,6 +36,15 @@ const routes = [
 		path: '/cadastrar-cliente',
 		name: 'cadastrar-cliente',
 		component: CadastroClienteView,
+		meta: {
+			layout: 'noheader',
+			requireAuth: false
+		}
+	},
+	{
+		path: '/cadastrar-fornecedor',
+		name: 'cadastrar-fornecedor',
+		component: CadastroFornecedorView,
 		meta: {
 			layout: 'noheader',
 			requireAuth: false

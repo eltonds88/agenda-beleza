@@ -10,7 +10,6 @@ using System.Net;
 namespace AgendaBeleza.Api.Controllers
 {
     [Route("/api/listas")]
-    [Authorize]
     public class ListasController : ControllerApi
     {
         public ListasController(MySqlConnection connection) : base(connection)

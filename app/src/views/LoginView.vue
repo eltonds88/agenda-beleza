@@ -20,6 +20,7 @@
 							() => !!login.email || 'Campo obrigatório',
 							() => /.+@.+\..+/.test(login.email) || 'E-mail deve ser válido'
 						]"
+						outlined
 						></v-text-field>
 					</v-col>
 					<v-col cols="12">
@@ -29,6 +30,7 @@
 						v-model="login.senha"
 						required
 						:rules="[() => !!login.senha || 'Campo obrigatório']"
+						outlined
 						></v-text-field>
 					</v-col>
 				</v-row>
@@ -43,8 +45,8 @@
 
 			<v-row class="mt-4">
 				<v-col cols="12" align="right">
-					<div class="pt-2"><a @click="goTo()">Me cadastrar como um cliente</a></div>
-					<div class="pt-2"><a @click="goTo()">Me cadastrar como um provedor de serviços</a></div>
+					<div class="pt-2"><a @click="goTo('cadastrar-cliente')">Me cadastrar como um cliente</a></div>
+					<div class="pt-2"><a @click="goTo('cadastrar-fornecedor')">Me cadastrar como um provedor de serviços</a></div>
 				</v-col>
 			</v-row>
 		</v-container>
@@ -88,8 +90,8 @@ export default {
 				})
 			}
 		},
-		goTo() {
-			this.$router.push('cadastrar-cliente')
+		goTo(routeName) {
+			this.$router.push(routeName)
 		}
 	}
 }
